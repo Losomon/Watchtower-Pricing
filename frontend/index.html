@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchtower - Price Tracker · Public Beta</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>  
+<!-- NOTIF -->
+<div class="notif" id="notif"><span id="nicon">✓</span><span id="nmsg">Done</span></div>
+
+<!-- ===== LANDING VIEW ===== -->
+<div class="view active" id="v-landing">
+  <nav>
+    <div class="nav-logo" onclick="goto('v-landing')">
+      <div class="nav-logo-mark">W</div>
+      <div class="nav-logo-text">Watch<em>tower</em></div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="scrollTo2('features')">Features</button>
+      <button class="nav-link" onclick="scrollTo2('pricing')">Pricing</button>
+      <button class="nav-link" onclick="scrollTo2('stack')">Tech</button>
+      <button class="nav-link" onclick="goto('v-docs')">Docs</button>
+    </div>
+    <button class="nav-cta" onclick="goto('v-app')">Open Dashboard →</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-kicker"><div class="hero-dot"></div>Now in public beta · v2.0</div>
+    <h1>Stop missing deals.<br>Let <span class="serif">Watchtower</span><br>watch for you.</h1>
+    <p class="hero-sub">Automated price intelligence across Amazon, Jumia, Kilimall, AliExpress and more. Real-time alerts. Historical trends. Zero effort.</p>
+    <div class="hero-actions">
+      <button class="btn-lg btn-primary" onclick="goto('v-app')">Start tracking free →</button>
+      <button class="btn-lg btn-ghost" onclick="goto('v-docs')">View the code</button>
+    </div>
+    <!-- Live Demo Card -->
+    <div class="hero-demo">
+      <div class="demo-topbar">
+        <div class="demo-dot" style="background:#ff5f57"></div>
+        <div class="demo-dot" style="background:#ffbd2e"></div>
+        <div class="demo-dot" style="background:#28c840"></div>
+        <span class="demo-title">watchtower · dashboard</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-stat"><div class="demo-stat-label">Tracked</div><div class="demo-stat-val" style="color:var(--b)">12</div></div>
+        <div class="demo-stat"><div class="demo-stat-label">Drops today</div><div class="demo-stat-val" style="color:var(--g)">3</div></div>
+        <div class="demo-stat"><div class="demo-stat-label">Saved</div><div class="demo-stat-val" style="color:var(--y)">KES 9.2k</div></div>
+        <div class="demo-products">
+          <div class="demo-row"><span class="demo-row-name">Sony WH-1000XM5</span><span class="demo-row-store">Amazon</span><span class="demo-row-price">KES 28,500</span><span class="demo-row-change chg-down">▼ 8.1%</span><span class="demo-badge badge-g"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Buy now</span></div>
+          <div class="demo-row"><span class="demo-row-name">Samsung 65" QLED TV</span><span class="demo-row-store">Jumia</span><span class="demo-row-price">KES 112,000</span><span class="demo-row-change chg-up">▲ 6.7%</span><span class="demo-badge badge-r"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Rising</span></div>
+          <div class="demo-row"><span class="demo-row-name">Apple AirPods Pro 2</span><span class="demo-row-store">Kilimall</span><span class="demo-row-price">KES 22,000</span><span class="demo-row-change chg-down">▼ 10.2%</span><span class="demo-badge badge-g"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M12 5v14M19 12H5"/></svg>Drop</span></div>
+          <div class="demo-row"><span class="demo-row-name">Logitech MX Master 3</span><span class="demo-row-store">AliExpress</span><span class="demo-row-price">KES 6,800</span><span class="demo-row-change chg-flat">— 0.0%</span><span class="demo-badge badge-b"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Watching</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-label">Why Watchtower</div>
+    <div class="section-title">Everything you need to<br>never overpay again.</div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="feat-title">Multi-store scraping</div><div class="feat-desc">Tracks Amazon, Jumia, Kilimall, AliExpress, eBay and any generic site. Registry pattern lets you add new stores in minutes.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(76,143,255,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-3"/><path d="M12 2v12M8 10l4 4 4-4"/></svg></div><div class="feat-title">Full price history</div><div class="feat-desc">Every price check is logged with timestamps. Visualise trends over 7, 30, or 90 days. Lowest/highest ever displayed instantly.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,139,61,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="feat-title">Smart alerts</div><div class="feat-desc">Telegram, email and webhook notifications. Set a target price and get notified the moment an item drops below it.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,208,75,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="feat-title">GitHub Actions CI/CD</div><div class="feat-desc">Runs fully automated on a cron schedule, no server needed. One YAML file. Price history cached between runs via Actions cache.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg></div><div class="feat-title">FastAPI backend</div><div class="feat-desc">Production REST API with product CRUD, history endpoints, stats and manual trigger. Swagger UI included. Ready for any frontend.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,75,92,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="feat-title">95%+ test coverage</div><div class="feat-desc">Pytest suite covers models, storage, tracker logic and scraper registry. CI runs on every push. mypy type-checked throughout.</div></div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">Simple, honest pricing.</div>
+    <div class="pricing-grid">
+       <div class="plan" data-plan="hobbyist" data-price="0" data-name="Hobbyist">
+         <div class="plan-name">Hobbyist</div>
+         <div class="plan-price"><sup>$</sup>0<sub>/mo</sub></div>
+         <div class="plan-desc">Self-hosted. Full source code. Perfect for personal use.</div>
+         <ul class="plan-features">
+           <li>Up to 10 products</li>
+           <li>GitHub Actions scheduler</li>
+           <li>Email + Telegram alerts</li>
+           <li>JSON/CSV storage</li>
+           <li class="x">Web dashboard UI</li>
+           <li class="x">Multi-user support</li>
+           <li class="x">Cloud hosting</li>
+         </ul>
+         <button class="plan-btn-action green" onclick="selectPlan('hobbyist',0,'Hobbyist')">Get the code →</button>
+       </div>
+      <div class="plan featured" data-plan="pro" data-price="9" data-name="Pro">
+         <div class="plan-badge">Most Popular</div>
+         <div class="plan-name">Pro</div>
+         <div class="plan-price"><sup>$</sup>9<sub>/mo</sub></div>
+         <div class="plan-desc">Hosted. Dashboard included. No DevOps required.</div>
+         <ul class="plan-features">
+           <li>Unlimited products</li>
+           <li>Web dashboard + charts</li>
+           <li>All alert channels</li>
+           <li>PostgreSQL storage</li>
+           <li>API access (FastAPI)</li>
+           <li class="x">Multi-user support</li>
+           <li class="x">White-label</li>
+         </ul>
+         <button class="plan-btn-action green" onclick="selectPlan('pro',9,'Pro')">Join waitlist</button>
+       </div>
+      <div class="plan" data-plan="team" data-price="29" data-name="Team">
+        <div class="plan-name">Team</div>
+        <div class="plan-price"><sup>$</sup>29<sub>/mo</sub></div>
+        <div class="plan-desc">Shared watchlists, roles and team notifications.</div>
+        <ul class="plan-features">
+          <li>Everything in Pro</li>
+          <li>Up to 10 team members</li>
+          <li>Shared watchlists</li>
+          <li>Role-based access</li>
+          <li>Webhook integrations</li>
+<li>Priority support</li>
+          <li class="x">White-label</li>
+        </ul>
+        <button class="plan-btn-action gray" onclick="scrollToSales()">Contact sales →</button>
+       </div>
+    </div>
+  </section>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="checkout-modal" onclick="closeModal(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+      <div class="modal-hdr">
+        <div class="modal-title" id="modal-title">Choose your plan</div>
+        <button class="modal-close" onclick="closeModal(null,true)">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="plan-summary" id="plan-summary">
+          <span class="plan-summary-name">Pro</span>
+          <span class="plan-summary-price">$9/mo</span>
+        </div>
+        <form id="payment-form" onsubmit="submitPayment(event)">
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" id="pay-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-row">
+            <label>Name</label>
+            <input type="text" id="pay-name" placeholder="Your name" required>
+          </div>
+          <div class="form-row">
+            <label>Card number</label>
+            <div class="card-input">
+              <input type="text" id="pay-card" placeholder="4242 4242 4242 4242" maxlength="19" required>
+               <span class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+            </div>
+          </div>
+          <div class="form-row form-row-3">
+            <div>
+              <label>Expiry</label>
+              <input type="text" id="pay-expiry" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div>
+              <label>CVC</label>
+              <input type="text" id="pay-cvc" placeholder="123" maxlength="3" required>
+            </div>
+          </div>
+          <div class="form-total">
+            <span>Total due today</span>
+            <span class="total-amount" id="total-amount">$9.00</span>
+          </div>
+          <button type="submit" class="pay-btn" id="pay-btn">Pay now →</button>
+          <div class="form-secure"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL encrypted — secure payment</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="techstack" id="stack">
+    <div class="techstack-inner">
+      <span class="tech-label">Built with</span>
+      <span class="tech-pill">Python 3.11</span>
+      <span class="tech-pill">FastAPI</span>
+      <span class="tech-pill">Pydantic v2</span>
+      <span class="tech-pill">httpx</span>
+      <span class="tech-pill">BeautifulSoup4</span>
+      <span class="tech-pill">Playwright</span>
+      <span class="tech-pill">pytest</span>
+      <span class="tech-pill">GitHub Actions</span>
+      <span class="tech-pill">Docker</span>
+      <span class="tech-pill">MIT License</span>
+    </div>
+  </div>
+
+  <!-- CONTACT SALES SECTION -->
+  <section class="pricing" id="contact-sales" style="padding:60px 32px 40px">
+    <div class="section-label">Contact Sales</div>
+    <div class="section-title">Ready for Team plan?</div>
+    <p style="max-width:600px;margin:0 auto 32px;font-size:16px;color:var(--t2);line-height:1.6;text-align:center">Get shared watchlists, role-based access, webhook integrations and priority support for your team. Fill the form below.</p>
+    <div style="max-width:500px;margin:0 auto;background:var(--s1);border:1px solid var(--b1);border-radius:16px;overflow:hidden">
+      <form style="padding:32px" onsubmit="submitContact(event)">
+        <div class="form-row">
+          <label>Name</label>
+          <input type="text" id="contact-name" placeholder="Your name" required style="width:100%">
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" id="contact-email" placeholder="team@company.com" required style="width:100%">
+        </div>
+        <div class="form-row">
+          <label>Team size</label>
+          <select id="contact-size" style="width:100%">
+            <option>2-5</option><option>6-10</option><option>10+</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Message</label>
+          <textarea id="contact-msg" placeholder="Tell us about your use case..." rows="4" style="width:100%;resize:vertical"></textarea>
+        </div>
+        <button type="submit" class="plan-btn-action green" style="width:100%;margin-top:8px">Send inquiry →</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Watchtower Pricing · MIT License</span>
+    <span style="display:flex;gap:20px">
+      <a href="#" onclick="goto('v-docs')">Docs</a>
+      <a href="#">GitHub</a>
+      <a href="#">Changelog</a>
+    </span>
+  </footer>
+</div>
+
+<!-- ===== APP VIEW ===== -->
+<div class="view" id="v-app">
+  <div class="app-nav">
+    <div style="display:flex;align-items:center;gap:0">
+      <div class="nav-logo" onclick="goto('v-landing')" style="margin-right:0">
+        <div class="nav-logo-mark" style="width:26px;height:26px;font-size:12px">W</div>
+        <div class="nav-logo-text" style="font-size:14px">Watch<em>tower</em></div>
+      </div>
+      <div class="app-tabs">
+        <button class="app-tab on" onclick="appTab('tracker',this)">Price Watcher</button>
+        <button class="app-tab" onclick="appTab('files',this)">File Processor</button>
+        <button class="app-tab" onclick="appTab('schedule',this)">Scheduler</button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-size:11px;font-family:var(--mono);color:var(--t3);background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:4px 10px">
+        <span style="color:var(--g)">●</span> API online
+      </div>
+      <button class="btn-sm" onclick="goto('v-landing')">← Landing</button>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <div class="app-sidebar">
+      <div class="side-stat">
+        <div class="side-stat-label">Overview</div>
+        <div class="side-row"><span class="side-row-label">Tracked</span><span class="side-row-val" style="color:var(--b)" id="sc-tracked">6</span></div>
+        <div class="side-row"><span class="side-row-label">Drops</span><span class="side-row-val" style="color:var(--g)" id="sc-drops">2</span></div>
+        <div class="side-row"><span class="side-row-label">Rises</span><span class="side-row-val" style="color:var(--r)">1</span></div>
+        <div class="side-row"><span class="side-row-label">Saved</span><span class="side-row-val" style="color:var(--y)">KES 9.2k</span></div>
+        <div class="side-row"><span class="side-row-label">Last run</span><span class="side-row-val" style="font-size:11px">2m ago</span></div>
+      </div>
+      <div class="side-stat">
+        <div class="side-stat-label">Alerts today</div>
+        <div class="mini-chart" id="side-chart"></div>
+      </div>
+      <div class="side-stat">
+        <div class="side-stat-label">Channels</div>
+        <div class="side-row"><span class="side-row-label">Email</span><span class="demo-badge badge-g" style="font-size:9px">on</span></div>
+        <div class="side-row"><span class="side-row-label">Telegram</span><span class="demo-badge badge-g" style="font-size:9px">on</span></div>
+        <div class="side-row"><span class="side-row-label">Webhook</span><span class="demo-badge badge-b" style="font-size:9px">off</span></div>
+      </div>
+    </div>
+
+    <div class="app-content">
+
+      <!-- TRACKER PANE -->
+      <div class="app-pane on" id="pane-tracker">
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Track new product</div></div>
+          <div class="add-form">
+            <div class="fg"><label class="flabel">Product URL</label><input class="finput" id="inp-url" placeholder="https://jumia.co.ke/..." /></div>
+            <div class="fg"><label class="flabel">Alert below (KES)</label><input class="finput" id="inp-tgt" type="number" placeholder="25000" /></div>
+            <div class="fg"><label class="flabel">Store</label><select class="fselect" id="inp-store"><option value="amazon">Amazon</option><option value="jumia">Jumia</option><option value="kilimall">Kilimall</option><option value="aliexpress">AliExpress</option><option value="ebay">eBay</option></select></div>
+            <button class="btn-sm btn-sm-primary" onclick="addProduct()" style="height:36px;margin-top:auto">Track</button>
+            <button class="btn-sm btn-sm-primary" onclick="runAll()" style="height:36px;margin-top:auto;margin-left:10px"><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run now</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M12 17V5"/><path d="M6 17v-3"/></svg> Tracked products</div>
+            <div class="card-actions">
+              <button class="btn-sm btn-sm-primary" onclick="runAll()"><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run now</button>
+              <button class="btn-sm" onclick="notify2('↓ Exporting prices.csv + history.csv','↓')"><svg class="icon-small" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
+            </div>
+          </div>
+          <table class="tbl" id="prod-table">
+            <thead><tr><th>Product</th><th>Current</th><th>Change</th><th>Trend</th><th>Target</th><th>Status</th><th></th></tr></thead>
+            <tbody id="prod-body"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Alert feed</div><span class="demo-badge badge-b" id="feed-badge">4 new</span></div>
+          <div id="alert-feed"></div>
+        </div>
+      </div>
+
+      <!-- FILES PANE -->
+      <div class="app-pane" id="pane-files">
+        <div class="card">
+          <div style="border:2px dashed var(--b2);border-radius:10px;padding:36px;text-align:center;cursor:pointer;transition:all .2s" id="dropzone" onclick="loadFiles()">
+            <div style="font-size:28px;margin-bottom:10px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div>
+            <div style="font-size:15px;font-weight:600;margin-bottom:6px">Drop folder here or click to browse</div>
+            <div style="font-size:13px;color:var(--t3);font-family:var(--mono)">Supports all file types · Rules applied in order</div>
+            <div id="dz-badge" style="display:none;margin-top:12px"><span class="demo-badge badge-b" id="dz-count">0 files</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/></svg> Rules</div><button class="btn-sm" onclick="addRule()">+ Add rule</button></div>
+          <div id="rules-area" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg> AI rename preview</div>
+            <div class="card-actions">
+              <button class="btn-sm" onclick="aiSuggest()"><svg class="icon-small" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg> AI Suggest</button>
+              <button class="btn-sm btn-sm-primary" id="proc-btn" onclick="processFiles()" disabled><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Process</button>
+            </div>
+          </div>
+          <div id="prog-area" style="display:none;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;font-family:var(--mono);margin-bottom:5px"><span id="prog-lbl">Processing...</span><span id="prog-pct">0%</span></div>
+            <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
+          </div>
+          <div id="file-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:220px;overflow-y:auto">
+            <div style="grid-column:1/-1;text-align:center;color:var(--t3);font-size:13px;font-family:var(--mono);padding:24px">Load files → AI Suggest</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE PANE -->
+      <div class="app-pane" id="pane-schedule">
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> GitHub Actions schedule</div><span class="demo-badge badge-g">Active</span></div>
+          <div style="background:var(--s2);border:1px solid var(--b1);border-radius:9px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div>
+              <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">CRON</div>
+              <code style="font-size:22px;color:var(--g);font-family:var(--mono)" id="cron-val">0 * * * *</code>
+            </div>
+            <span class="demo-badge badge-b" id="cron-human">Every hour</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-sm" onclick="setCron('0 * * * *','Every hour')">Hourly</button>
+            <button class="btn-sm" onclick="setCron('0 */6 * * *','Every 6 hours')">Every 6h</button>
+            <button class="btn-sm" onclick="setCron('0 9,21 * * *','9AM & 9PM')">2×/day</button>
+            <button class="btn-sm" onclick="setCron('*/30 * * * *','Every 30 min')">30 min</button>
+            <button class="btn-sm" onclick="setCron('0 8 * * MON-FRI','Weekdays 8AM')">Weekdays</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> .github/workflows/run.yml</div><button class="btn-sm" onclick="notify2('YAML copied!','📋')">Copy</button></div>
+          <div class="codebox" id="yaml-box"></div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Actions</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-sm btn-sm-primary" onclick="notify2('▶ Dispatching workflow...','✓')">Manual dispatch</button>
+            <button class="btn-sm" onclick="notify2('Logs fetched','📜')">View logs</button>
+            <button class="btn-sm" style="border-color:rgba(255,75,92,.4);color:var(--r)" onclick="notify2('⏸ Schedule paused','!')">Pause</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== DOCS VIEW ===== -->
+<div class="view" id="v-docs">
+  <nav>
+    <div class="nav-logo" onclick="goto('v-landing')"><div class="nav-logo-mark">W</div><div class="nav-logo-text">Watch<em>tower</em></div></div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="goto('v-landing')">← Back</button>
+    </div>
+    <button class="nav-cta" onclick="goto('v-app')">Open Dashboard →</button>
+  </nav>
+  <div style="max-width:760px;margin:0 auto;padding:60px 32px;flex:1">
+    <div class="section-label">Documentation</div>
+    <h1 style="font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:32px">Quick Start</h1>
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12h6M12 9v6"/><circle cx="12" cy="12" r="10"/></svg> 1. Install</div><div class="codebox">git clone https://github.com/you/watchtower-pricing<br>cd watchtower-pricing<br>pip install -r requirements.txt</div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> 2. Add a product</div><div class="codebox">python automation/run.py add https://jumia.co.ke/sony --target 25000</div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> 3. Run a check</div><div class="codebox">python automation/run.py track</div></div>
+    </div>
+  </div>
+  <footer><span>© 2026 Watchtower Pricing · MIT License</span><span style="color:var(--t3)">v2.0.0</span></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

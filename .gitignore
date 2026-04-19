@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+data/
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+*.log
+TODO.md
+

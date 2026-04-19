@@ -51,12 +51,14 @@ class BaseScraper(ABC):
 
     def __init__(self, proxy: Optional[str] = None):
         self.proxy = proxy
-        self._client = httpx.Client(
-            timeout=self.timeout,
-            follow_redirects=True,
-            headers=self._build_headers(),
-            proxies={"all://": proxy} if proxy else None,
-        )
+        client_kwargs = {
+            "timeout": self.timeout,
+            "follow_redirects": True,
+            "headers": self._build_headers(),
+        }
+        if proxy:
+            client_kwargs["proxies"] = {"http://": proxy, "https://": proxy}
+        self._client = httpx.Client(**client_kwargs)
 
     def _build_headers(self) -> dict:
         return {**_BASE_HEADERS, "User-Agent": random.choice(_USER_AGENTS)}
