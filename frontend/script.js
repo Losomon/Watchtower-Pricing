@@ -80,8 +80,7 @@ async function loadData() {
     document.querySelector('.app-nav div[style*="API online"]').textContent = ' ● API online';
   } catch (e) {
     console.warn('Backend offline, using demo data', e);
-    document.querySelector('.app-nav div[style*="API online"]').textContent = ' ● Offline';
-    document.querySelector('.app-nav div[style*="API online"]').style.color = 'var(--r)';
+    document.querySelector('.app-nav > div:last-child').innerHTML='<span style="color:var(--r)">●</span> Offline';
   }
 }
 
@@ -114,9 +113,12 @@ function renderProducts(){
 function rmProduct(id){products=products.filter(p=>p.id!==id);renderProducts();notify2('Removed','✕')}
 
 async function addProduct(){
-  const url=document.getElementById('inp-url').value;
+  const url=document.getElementById('inp-url').value.trim();
   if(!url){notify2('Enter a URL first','!');return}
+  try{new URL(url)}catch{notify2('Invalid URL format','!');return}
+  if(!url.startsWith('http')){notify2('URL must start with http:// or https://','!');return}
   const tgt=parseFloat(document.getElementById('inp-tgt').value)||null;
+  if(tgt && tgt<=0){notify2('Target price must be positive','!');return}
   const store=document.getElementById('inp-store').value;
   document.getElementById('inp-url').value='';
   document.getElementById('inp-tgt').value='';
