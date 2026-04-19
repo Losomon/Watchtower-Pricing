@@ -1,288 +1,14 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchtower - Price Tracker · Public Beta</title>
+<link rel="stylesheet" href="styles.css">
+</head>
 
-:root{
---bg:#07080a;--s1:#0d0f13;--s2:#13161c;--s3:#1a1e26;
---b1:#1e232d;--b2:#262c38;--b3:#303847;
---t1:#f0f2f8;--t2:#9aa3b8;--t3:#5c6880;
---g:#22e9a0;--g2:#1acc8a;--g3:#0fa06b;
---r:#ff4b5c;--b:#4c8fff;--o:#ff8b3d;--y:#ffd04b;
---mono:'DM Mono',monospace;
---serif:'Instrument Serif',serif;
---sans:'DM Sans',sans-serif;
-}
-
-body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:15px;min-height:100vh;overflow-x:hidden}
-
-/* ── VIEWS ── */
-.view{display:none;flex-direction:column;min-height:100vh}
-.view.active{display:flex}
-
-/* ── NAV ── */
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--b1);background:rgba(7,8,10,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
-.nav-logo-mark{width:30px;height:30px;background:var(--g);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:500;font-size:14px;color:#000}
-.nav-logo-text{font-size:16px;font-weight:700;letter-spacing:-0.3px}
-.nav-logo-text em{color:var(--g);font-style:normal}
-.nav-links{display:flex;align-items:center;gap:6px}
-.nav-link{background:none;border:none;color:var(--t2);font-family:var(--sans);font-size:13px;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .15s}
-.nav-link:hover{color:var(--t1);background:var(--s2)}
-.nav-cta{background:var(--g);color:#000;border:none;font-family:var(--sans);font-size:13px;font-weight:600;padding:8px 18px;border-radius:8px;cursor:pointer;transition:all .15s}
-.nav-cta:hover{background:#29ffb5;transform:translateY(-1px)}
-
-/* ── HERO ── */
-.hero{padding:90px 32px 70px;text-align:center;position:relative;overflow:hidden;flex:1}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 400px at 50% 0%,rgba(34,233,160,.06) 0%,transparent 70%);pointer-events:none}
-.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(34,233,160,.08);border:1px solid rgba(34,233,160,.18);border-radius:30px;padding:6px 16px;font-size:12px;font-family:var(--mono);color:var(--g);margin-bottom:28px;letter-spacing:.5px}
-.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(36px,5vw,62px);font-weight:700;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;max-width:680px;margin-left:auto;margin-right:auto}
-.hero h1 .serif{font-family:var(--serif);font-style:italic;color:var(--g)}
-.hero-sub{font-size:17px;color:var(--t2);max-width:480px;margin:0 auto 40px;line-height:1.65;font-weight:300}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
-.btn-lg{padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;font-family:var(--sans);cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary{background:var(--g);color:#000}
-.btn-primary:hover{background:#29ffb5;transform:translateY(-2px);box-shadow:0 8px 32px rgba(34,233,160,.25)}
-.btn-ghost{background:var(--s2);color:var(--t1);border:1px solid var(--b2)}
-.btn-ghost:hover{border-color:var(--b3);background:var(--s3)}
-
-/* ── HERO DEMO CARD ── */
-.hero-demo{max-width:760px;margin:0 auto;background:var(--s1);border:1px solid var(--b1);border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.5)}
-.demo-topbar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--s2);border-bottom:1px solid var(--b1)}
-.demo-dot{width:10px;height:10px;border-radius:50%}
-.demo-title{font-size:12px;font-family:var(--mono);color:var(--t3);margin:0 auto}
-.demo-body{padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.demo-stat{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px}
-.demo-stat-label{font-size:11px;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-.demo-stat-val{font-size:26px;font-weight:700;font-family:var(--mono)}
-.demo-products{grid-column:1/-1;background:var(--s2);border:1px solid var(--b1);border-radius:10px;overflow:hidden}
-.demo-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b1);font-size:13px}
-.demo-row:last-child{border-bottom:none}
-.demo-row-name{flex:1;font-weight:500}
-.demo-row-store{font-size:11px;font-family:var(--mono);color:var(--t3);width:80px}
-.demo-row-price{font-family:var(--mono);font-weight:600;width:100px;text-align:right}
-.demo-row-change{font-family:var(--mono);font-size:12px;font-weight:600;width:70px;text-align:right}
-.chg-down{color:var(--g)}.chg-up{color:var(--r)}.chg-flat{color:var(--t3)}
-.demo-badge{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:20px;font-weight:600}
-.badge-g{background:rgba(34,233,160,.12);color:var(--g);border:1px solid rgba(34,233,160,.2)}
-.badge-r{background:rgba(255,75,92,.12);color:var(--r);border:1px solid rgba(255,75,92,.2)}
-.badge-b{background:rgba(76,143,255,.12);color:var(--b);border:1px solid rgba(76,143,255,.2)}
-.badge-y{background:rgba(255,208,75,.12);color:var(--y);border:1px solid rgba(255,208,75,.2)}
-
-/* ── FEATURES ── */
-.features{padding:80px 32px;max-width:1000px;margin:0 auto;width:100%}
-.section-label{font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:2px;color:var(--g);margin-bottom:16px}
-.section-title{font-size:clamp(26px,3vw,38px);font-weight:700;letter-spacing:-1px;margin-bottom:48px;line-height:1.15}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.feat-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:24px;transition:border-color .2s,transform .2s}
-.feat-card:hover{border-color:var(--b3);transform:translateY(-2px)}
-.feat-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
-.feat-title{font-size:15px;font-weight:600;margin-bottom:8px}
-.feat-desc{font-size:13px;color:var(--t2);line-height:1.6}
-
-/* ── PRICING ── */
-.pricing{padding:60px 32px;max-width:880px;margin:0 auto;width:100%}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:40px}
-.plan{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:28px;position:relative;transition:border-color .2s}
-.plan.featured{border:2px solid var(--g);background:linear-gradient(135deg,rgba(34,233,160,.05),var(--s1))}
-.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--g);color:#000;font-size:11px;font-weight:700;padding:3px 14px;border-radius:20px;font-family:var(--mono);white-space:nowrap}
-.plan-name{font-size:14px;font-weight:600;color:var(--t2);margin-bottom:8px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.8px}
-.plan-price{font-size:38px;font-weight:700;letter-spacing:-1px;margin-bottom:4px}
-.plan-price sup{font-size:18px;font-weight:600;vertical-align:super}
-.plan-price sub{font-size:14px;color:var(--t2);font-weight:400}
-.plan-desc{font-size:13px;color:var(--t2);margin-bottom:20px;line-height:1.5}
-.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.plan-features li{font-size:13px;display:flex;align-items:flex-start;gap:8px;color:var(--t2)}
-.plan-features li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0;margin-top:1px}
-.plan-features li.x{color:var(--t3)}
-.plan-features li.x::before{content:'—';color:var(--t3)}
-.plan-btn{width:100%;padding:11px;border-radius:9px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;border:none;transition:all .15s}
-.plan-btn-ghost{background:none;color:var(--t1);border:1px solid var(--b2)}
-.plan-btn-ghost:hover{border-color:var(--b3)}
-.plan-btn-primary{background:var(--g);color:#000}
-.plan-btn-primary:hover{background:#29ffb5}
-
-/* ── TECH STACK ── */
-.techstack{padding:40px 32px;background:var(--s1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);margin-bottom:0}
-.techstack-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center}
-.tech-label{font-size:11px;font-family:var(--mono);color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-right:8px}
-.tech-pill{background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:6px 14px;font-size:12px;font-family:var(--mono);color:var(--t2)}
-
-/* ── FOOTER ── */
-footer{padding:28px 32px;border-top:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--t3)}
-footer a{color:var(--t2);text-decoration:none}
-
-/* ── APP DASHBOARD ── */
-.app-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--s1);border-bottom:1px solid var(--b1);position:sticky;top:0;z-index:100}
-.app-tabs{display:flex;gap:2px;margin-left:24px}
-.app-tab{background:none;border:none;color:var(--t3);font-family:var(--sans);font-size:13px;font-weight:500;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .15s}
-.app-tab:hover{color:var(--t1);background:var(--s2)}
-.app-tab.on{color:var(--g);background:rgba(34,233,160,.08)}
-.app-body{flex:1;display:flex;overflow:hidden}
-.app-sidebar{width:220px;background:var(--s1);border-right:1px solid var(--b1);padding:16px;flex-shrink:0;display:flex;flex-direction:column;gap:10px}
-.app-content{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
-.app-pane{display:none;flex-direction:column;gap:16px}
-.app-pane.on{display:flex}
-
-/* SIDEBAR STATS */
-.side-stat{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:14px}
-.side-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);font-family:var(--mono);margin-bottom:8px}
-.side-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b1);font-size:12px}
-.side-row:last-child{border-bottom:none}
-.side-row-label{color:var(--t2);font-family:var(--mono)}
-.side-row-val{font-family:var(--mono);font-weight:600}
-
-/* MAIN CARDS */
-.card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px}
-.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.card-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px}
-.card-actions{display:flex;gap:8px}
-.btn-sm{padding:6px 14px;border-radius:7px;font-size:12px;font-weight:600;font-family:var(--sans);border:1px solid var(--b2);background:var(--s2);color:var(--t1);cursor:pointer;transition:all .15s}
-.btn-sm:hover{border-color:var(--g);color:var(--g)}
-.btn-sm-primary{background:var(--g);color:#000;border-color:var(--g)}
-.btn-sm-primary:hover{background:#29ffb5}
-
-/* TABLE */
-.tbl{width:100%;border-collapse:collapse}
-.tbl th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);padding:8px 12px;border-bottom:1px solid var(--b1);font-family:var(--mono)}
-.tbl td{padding:12px;font-size:13px;border-bottom:1px solid var(--b1)}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:rgba(255,255,255,.02)}
-.pname{font-weight:600;margin-bottom:2px;font-size:13px}
-.pstore{font-size:11px;color:var(--t3);font-family:var(--mono)}
-.pcurr{font-family:var(--mono);font-weight:700;font-size:14px}
-.pchg{font-family:var(--mono);font-size:12px;font-weight:600}
-
-/* SPARKLINE */
-.spark{vertical-align:middle}
-
-/* ADD FORM */
-.add-form{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:flex-end}
-.fg{display:flex;flex-direction:column;gap:5px}
-.flabel{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);font-family:var(--mono)}
-.finput,.fselect{background:var(--s2);border:1px solid var(--b2);border-radius:8px;color:var(--t1);font-family:var(--mono);font-size:13px;padding:8px 12px;outline:none;transition:border-color .15s}
-.finput:focus,.fselect:focus{border-color:var(--g)}
-.fselect{cursor:pointer}
-
-/* ALERTS */
-.alert-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--b1)}
-.alert-item:last-child{border-bottom:none}
-.adot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.amsg{font-size:13px;flex:1}
-.atime{font-size:11px;color:var(--t3);font-family:var(--mono);white-space:nowrap}
-
-/* MINI CHART */
-.mini-chart{display:flex;align-items:flex-end;gap:3px;height:48px;margin-top:12px}
-.mbar{flex:1;border-radius:2px 2px 0 0;min-height:3px;transition:background .15s;cursor:pointer}
-.mbar:hover{filter:brightness(1.3)}
-
-/* PROGRESS */
-.prog-wrap{background:var(--s2);border-radius:4px;height:5px;width:100%}
-.prog-bar{height:100%;border-radius:4px;background:var(--g);transition:width .4s ease}
-
-/* NOTIFICATION */
-.notif{position:fixed;bottom:20px;right:20px;background:var(--s1);border:1px solid var(--g);border-radius:10px;padding:12px 18px;font-size:13px;display:flex;align-items:center;gap:10px;transform:translateY(80px);opacity:0;transition:all .3s;z-index:999;max-width:300px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-.notif.show{transform:translateY(0);opacity:1}
-
-/* CODE BLOCK */
-.codebox{background:#050608;border:1px solid var(--b1);border-radius:10px;padding:18px;font-family:var(--mono);font-size:12px;color:#a8b0c8;overflow-x:auto;line-height:1.7}
-.ckw{color:#ff79c6}.cst{color:#f1fa8c}.ccl{color:var(--g)}.cco{color:var(--t3)}
-
-/* ── MODAL ── */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);
-  display:none;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .2s ease
-}
-.modal-overlay.show{display:flex}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-dialog{
-  background:var(--s1);border:1px solid var(--b2);border-radius:16px;
-  width:min(440px,92vw);max-height:90vh;overflow-y:auto;
-  box-shadow:0 32px 80px rgba(0,0,0,.6);animation:slideUp .25s ease
-}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 22px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:var(--s1);z-index:1
-}
-.modal-title{font-size:16px;font-weight:700}
-.modal-close{
-  background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;padding:4px 8px;border-radius:6px
-}
-.modal-close:hover{color:var(--t1);background:var(--s2)}
-.modal-body{padding:22px}
-.plan-summary{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:14px 16px;margin-bottom:18px
-}
-.plan-summary-name{font-weight:700;font-size:15px}
-.plan-summary-price{font-family:var(--mono);color:var(--g);font-weight:700;font-size:18px}
-.form-row{
-  display:flex;flex-direction:column;gap:6px;margin-bottom:14px
-}
-.form-row label{
-  font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);font-family:var(--mono)
-}
-.form-row input{
-  background:var(--s2);border:1px solid var(--b2);border-radius:8px;
-  color:var(--t1);font-family:var(--sans);font-size:14px;padding:10px 12px;outline:none;transition:border-color .15s
-}
-.form-row input:focus{border-color:var(--g)}
-.form-row-3{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
-}
-.card-input{
-  position:relative
-}
-.card-input input{padding-right:36px}
-.card-icon{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  font-size:14px;opacity:.6;pointer-events:none
-}
-.form-total{
-  display:flex;justify-content:space-between;align-items:center;
-  background:var(--s2);border-radius:8px;padding:12px 14px;margin-top:8px;margin-bottom:14px
-}
-.total-amount{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--g)}
-.pay-btn{
-  width:100%;background:var(--g);color:#000;border:none;font-family:var(--sans);
-  font-size:15px;font-weight:700;padding:13px;border-radius:10px;cursor:pointer;
-  transition:all .2s;margin-bottom:8px
-}
-.pay-btn:hover{background:#29ffb5;transform:translateY(-1px)}
-.pay-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.form-secure{
-  text-align:center;font-size:11px;color:var(--t3);font-family:var(--mono)
-}
-.plan.selected{
-  border-color:var(--g);background:linear-gradient(135deg,rgba(34,233,160,.08),var(--s1));
-  box-shadow:0 0 0 2px rgba(34,233,160,15)
-}
-
-/* ENHANCED PLAN BUTTONS */
-.plan-btn-action{
-  width:100%;padding:11px;border-radius:9px;font-size:14px;font-weight:600;
-  font-family:var(--sans);cursor:pointer;border:none;transition:all .15s;text-align:center
-}
-.plan-btn-action.green{background:var(--g);color:#000}
-.plan-btn-action.green:hover{background:#29ffb5;transform:translateY(-1px)}
-.plan-btn-action.gray{background:var(--s2);color:var(--t1);border:1px solid var(--b2)}
-.plan-btn-action.gray:hover{border-color:var(--b3);color:var(--t1)}
-
-@media(max-width:680px){
-.feat-grid,.pricing-grid,.add-form{grid-template-columns:1fr}
-.demo-body{grid-template-columns:1fr}
-.app-sidebar{display:none}
-.hero h1{font-size:32px;letter-spacing:-1px}
-}
-</style>
-
+<body>  
 <!-- NOTIF -->
 <div class="notif" id="notif"><span id="nicon">✓</span><span id="nmsg">Done</span></div>
 
@@ -324,10 +50,10 @@ footer a{color:var(--t2);text-decoration:none}
         <div class="demo-stat"><div class="demo-stat-label">Drops today</div><div class="demo-stat-val" style="color:var(--g)">3</div></div>
         <div class="demo-stat"><div class="demo-stat-label">Saved</div><div class="demo-stat-val" style="color:var(--y)">KES 9.2k</div></div>
         <div class="demo-products">
-          <div class="demo-row"><span class="demo-row-name">Sony WH-1000XM5</span><span class="demo-row-store">Amazon</span><span class="demo-row-price">KES 28,500</span><span class="demo-row-change chg-down">▼ 8.1%</span><span class="demo-badge badge-g">🔔 Buy now</span></div>
-          <div class="demo-row"><span class="demo-row-name">Samsung 65" QLED TV</span><span class="demo-row-store">Jumia</span><span class="demo-row-price">KES 112,000</span><span class="demo-row-change chg-up">▲ 6.7%</span><span class="demo-badge badge-r">Rising</span></div>
-          <div class="demo-row"><span class="demo-row-name">Apple AirPods Pro 2</span><span class="demo-row-store">Kilimall</span><span class="demo-row-price">KES 22,000</span><span class="demo-row-change chg-down">▼ 10.2%</span><span class="demo-badge badge-g">↓ Drop</span></div>
-          <div class="demo-row"><span class="demo-row-name">Logitech MX Master 3</span><span class="demo-row-store">AliExpress</span><span class="demo-row-price">KES 6,800</span><span class="demo-row-change chg-flat">— 0.0%</span><span class="demo-badge badge-b">Watching</span></div>
+          <div class="demo-row"><span class="demo-row-name">Sony WH-1000XM5</span><span class="demo-row-store">Amazon</span><span class="demo-row-price">KES 28,500</span><span class="demo-row-change chg-down">▼ 8.1%</span><span class="demo-badge badge-g"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Buy now</span></div>
+          <div class="demo-row"><span class="demo-row-name">Samsung 65" QLED TV</span><span class="demo-row-store">Jumia</span><span class="demo-row-price">KES 112,000</span><span class="demo-row-change chg-up">▲ 6.7%</span><span class="demo-badge badge-r"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Rising</span></div>
+          <div class="demo-row"><span class="demo-row-name">Apple AirPods Pro 2</span><span class="demo-row-store">Kilimall</span><span class="demo-row-price">KES 22,000</span><span class="demo-row-change chg-down">▼ 10.2%</span><span class="demo-badge badge-g"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M12 5v14M19 12H5"/></svg>Drop</span></div>
+          <div class="demo-row"><span class="demo-row-name">Logitech MX Master 3</span><span class="demo-row-store">AliExpress</span><span class="demo-row-price">KES 6,800</span><span class="demo-row-change chg-flat">— 0.0%</span><span class="demo-badge badge-b"><svg class="icon-small" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Watching</span></div>
         </div>
       </div>
     </div>
@@ -338,12 +64,12 @@ footer a{color:var(--t2);text-decoration:none}
     <div class="section-label">Why Watchtower</div>
     <div class="section-title">Everything you need to<br>never overpay again.</div>
     <div class="feat-grid">
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)">🔍</div><div class="feat-title">Multi-store scraping</div><div class="feat-desc">Tracks Amazon, Jumia, Kilimall, AliExpress, eBay and any generic site. Registry pattern lets you add new stores in minutes.</div></div>
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(76,143,255,.1)">📊</div><div class="feat-title">Full price history</div><div class="feat-desc">Every price check is logged with timestamps. Visualise trends over 7, 30, or 90 days. Lowest/highest ever displayed instantly.</div></div>
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,139,61,.1)">🔔</div><div class="feat-title">Smart alerts</div><div class="feat-desc">Telegram, email and webhook notifications. Set a target price and get notified the moment an item drops below it.</div></div>
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,208,75,.1)">⚡</div><div class="feat-title">GitHub Actions CI/CD</div><div class="feat-desc">Runs fully automated on a cron schedule, no server needed. One YAML file. Price history cached between runs via Actions cache.</div></div>
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)">🏗️</div><div class="feat-title">FastAPI backend</div><div class="feat-desc">Production REST API with product CRUD, history endpoints, stats and manual trigger. Swagger UI included. Ready for any frontend.</div></div>
-      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,75,92,.1)">🧪</div><div class="feat-title">95%+ test coverage</div><div class="feat-desc">Pytest suite covers models, storage, tracker logic and scraper registry. CI runs on every push. mypy type-checked throughout.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="feat-title">Multi-store scraping</div><div class="feat-desc">Tracks Amazon, Jumia, Kilimall, AliExpress, eBay and any generic site. Registry pattern lets you add new stores in minutes.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(76,143,255,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-3"/><path d="M12 2v12M8 10l4 4 4-4"/></svg></div><div class="feat-title">Full price history</div><div class="feat-desc">Every price check is logged with timestamps. Visualise trends over 7, 30, or 90 days. Lowest/highest ever displayed instantly.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,139,61,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="feat-title">Smart alerts</div><div class="feat-desc">Telegram, email and webhook notifications. Set a target price and get notified the moment an item drops below it.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,208,75,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="feat-title">GitHub Actions CI/CD</div><div class="feat-desc">Runs fully automated on a cron schedule, no server needed. One YAML file. Price history cached between runs via Actions cache.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(34,233,160,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg></div><div class="feat-title">FastAPI backend</div><div class="feat-desc">Production REST API with product CRUD, history endpoints, stats and manual trigger. Swagger UI included. Ready for any frontend.</div></div>
+      <div class="feat-card"><div class="feat-icon" style="background:rgba(255,75,92,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="feat-title">95%+ test coverage</div><div class="feat-desc">Pytest suite covers models, storage, tracker logic and scraper registry. CI runs on every push. mypy type-checked throughout.</div></div>
     </div>
   </section>
 
@@ -426,7 +152,7 @@ footer a{color:var(--t2);text-decoration:none}
             <label>Card number</label>
             <div class="card-input">
               <input type="text" id="pay-card" placeholder="4242 4242 4242 4242" maxlength="19" required>
-              <span class="card-icon">💳</span>
+               <span class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
             </div>
           </div>
           <div class="form-row form-row-3">
@@ -444,12 +170,11 @@ footer a{color:var(--t2);text-decoration:none}
             <span class="total-amount" id="total-amount">$9.00</span>
           </div>
           <button type="submit" class="pay-btn" id="pay-btn">Pay now →</button>
-          <div class="form-secure">🔒 SSL encrypted — secure payment</div>
+          <div class="form-secure"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL encrypted — secure payment</div>
         </form>
       </div>
     </div>
   </div>
-
 
   <!-- TECH STACK -->
   <div class="techstack" id="stack">
@@ -554,26 +279,24 @@ footer a{color:var(--t2);text-decoration:none}
 
     <div class="app-content">
 
-      <!-- ── TRACKER PANE ── -->
+      <!-- TRACKER PANE -->
       <div class="app-pane on" id="pane-tracker">
-        <!-- Add -->
         <div class="card">
-          <div class="card-hdr"><div class="card-title">➕ Track new product</div></div>
-<div class="add-form">
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Track new product</div></div>
+          <div class="add-form">
             <div class="fg"><label class="flabel">Product URL</label><input class="finput" id="inp-url" placeholder="https://jumia.co.ke/..." /></div>
             <div class="fg"><label class="flabel">Alert below (KES)</label><input class="finput" id="inp-tgt" type="number" placeholder="25000" /></div>
             <div class="fg"><label class="flabel">Store</label><select class="fselect" id="inp-store"><option value="amazon">Amazon</option><option value="jumia">Jumia</option><option value="kilimall">Kilimall</option><option value="aliexpress">AliExpress</option><option value="ebay">eBay</option></select></div>
             <button class="btn-sm btn-sm-primary" onclick="addProduct()" style="height:36px;margin-top:auto">Track</button>
-            <button class="btn-sm btn-sm-primary" onclick="runAll()" style="height:36px;margin-top:auto;margin-left:10px">▶ Run now</button>
+            <button class="btn-sm btn-sm-primary" onclick="runAll()" style="height:36px;margin-top:auto;margin-left:10px"><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run now</button>
           </div>
         </div>
-        <!-- Table -->
         <div class="card">
           <div class="card-hdr">
-            <div class="card-title">📊 Tracked products</div>
-<div class="card-actions">
-              <button class="btn-sm btn-sm-primary" onclick="runAll()">▶ Run now</button>
-              <button class="btn-sm" onclick="notify2('↓ Exporting prices.csv + history.csv','↓')">↓ Export CSV</button>
+            <div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M12 17V5"/><path d="M6 17v-3"/></svg> Tracked products</div>
+            <div class="card-actions">
+              <button class="btn-sm btn-sm-primary" onclick="runAll()"><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run now</button>
+              <button class="btn-sm" onclick="notify2('↓ Exporting prices.csv + history.csv','↓')"><svg class="icon-small" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
             </div>
           </div>
           <table class="tbl" id="prod-table">
@@ -581,33 +304,32 @@ footer a{color:var(--t2);text-decoration:none}
             <tbody id="prod-body"></tbody>
           </table>
         </div>
-        <!-- Alerts feed -->
         <div class="card">
-          <div class="card-hdr"><div class="card-title">🔔 Alert feed</div><span class="demo-badge badge-b" id="feed-badge">4 new</span></div>
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9 3 9h12s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Alert feed</div><span class="demo-badge badge-b" id="feed-badge">4 new</span></div>
           <div id="alert-feed"></div>
         </div>
       </div>
 
-      <!-- ── FILES PANE ── -->
+      <!-- FILES PANE -->
       <div class="app-pane" id="pane-files">
         <div class="card">
           <div style="border:2px dashed var(--b2);border-radius:10px;padding:36px;text-align:center;cursor:pointer;transition:all .2s" id="dropzone" onclick="loadFiles()">
-            <div style="font-size:28px;margin-bottom:10px">📁</div>
+            <div style="font-size:28px;margin-bottom:10px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div>
             <div style="font-size:15px;font-weight:600;margin-bottom:6px">Drop folder here or click to browse</div>
             <div style="font-size:13px;color:var(--t3);font-family:var(--mono)">Supports all file types · Rules applied in order</div>
             <div id="dz-badge" style="display:none;margin-top:12px"><span class="demo-badge badge-b" id="dz-count">0 files</span></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-hdr"><div class="card-title">⚙️ Rules</div><button class="btn-sm" onclick="addRule()">+ Add rule</button></div>
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/></svg> Rules</div><button class="btn-sm" onclick="addRule()">+ Add rule</button></div>
           <div id="rules-area" style="display:flex;flex-direction:column;gap:8px"></div>
         </div>
         <div class="card">
           <div class="card-hdr">
-            <div class="card-title">🤖 AI rename preview</div>
+            <div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg> AI rename preview</div>
             <div class="card-actions">
-              <button class="btn-sm" onclick="aiSuggest()">✨ AI Suggest</button>
-              <button class="btn-sm btn-sm-primary" id="proc-btn" onclick="processFiles()" disabled>▶ Process</button>
+              <button class="btn-sm" onclick="aiSuggest()"><svg class="icon-small" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg> AI Suggest</button>
+              <button class="btn-sm btn-sm-primary" id="proc-btn" onclick="processFiles()" disabled><svg class="icon-small" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Process</button>
             </div>
           </div>
           <div id="prog-area" style="display:none;margin-bottom:12px">
@@ -620,10 +342,10 @@ footer a{color:var(--t2);text-decoration:none}
         </div>
       </div>
 
-      <!-- ── SCHEDULE PANE ── -->
+      <!-- SCHEDULE PANE -->
       <div class="app-pane" id="pane-schedule">
         <div class="card">
-          <div class="card-hdr"><div class="card-title">🕐 GitHub Actions schedule</div><span class="demo-badge badge-g">Active</span></div>
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> GitHub Actions schedule</div><span class="demo-badge badge-g">Active</span></div>
           <div style="background:var(--s2);border:1px solid var(--b1);border-radius:9px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
             <div>
               <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">CRON</div>
@@ -640,11 +362,11 @@ footer a{color:var(--t2);text-decoration:none}
           </div>
         </div>
         <div class="card">
-          <div class="card-hdr"><div class="card-title">📄 .github/workflows/run.yml</div><button class="btn-sm" onclick="notify2('YAML copied!','📋')">Copy</button></div>
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> .github/workflows/run.yml</div><button class="btn-sm" onclick="notify2('YAML copied!','📋')">Copy</button></div>
           <div class="codebox" id="yaml-box"></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><div class="card-title">⚡ Actions</div></div>
+          <div class="card-hdr"><div class="card-title"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Actions</div></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="btn-sm btn-sm-primary" onclick="notify2('▶ Dispatching workflow...','✓')">Manual dispatch</button>
             <button class="btn-sm" onclick="notify2('Logs fetched','📜')">View logs</button>
@@ -669,327 +391,14 @@ footer a{color:var(--t2);text-decoration:none}
   <div style="max-width:760px;margin:0 auto;padding:60px 32px;flex:1">
     <div class="section-label">Documentation</div>
     <h1 style="font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:32px">Quick Start</h1>
-
     <div style="display:flex;flex-direction:column;gap:28px">
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">1. Install</div>
-        <div class="codebox"><span class="cco"># Clone and install</span>
-git clone https://github.com/you/watchtower-pricing
-cd watchtower-pricing
-pip install -r requirements.txt</div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">2. Add a product</div>
-        <div class="codebox"><span class="cco"># Track a Jumia product, alert below KES 25,000</span>
-python automation/run.py add \
-  https://jumia.co.ke/sony-wh1000xm5/ \
-  --name "Sony WH-1000XM5" \
-  --target 25000</div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">3. Run a check</div>
-        <div class="codebox">python automation/run.py track
-<span class="cco">
-# 🔭 Watchtower — checking 1 product
-# ✓ Sony WH-1000XM5: KES 28,500 (▼ 8.1%)</span></div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">4. Start the API</div>
-        <div class="codebox">uvicorn api.main:app --reload
-<span class="cco"># → Swagger UI: http://localhost:8000/docs
-# → Health:     http://localhost:8000/health
-# → Products:   GET /products
-# → Track all:  POST /track/all</span></div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">5. Configure alerts</div>
-        <div class="codebox"><span class="cco"># .env</span>
-ALERT_EMAIL_TO=you@gmail.com
-ALERT_EMAIL_FROM=alerts@gmail.com
-SMTP_PASSWORD=your-app-password
-TELEGRAM_TOKEN=your-bot-token
-TELEGRAM_CHAT_ID=your-chat-id</div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px;font-size:16px">6. Run tests</div>
-        <div class="codebox">pytest tests/ -v
-<span class="cco"># tests/test_watchtower.py
-# ✓ TestProduct::test_valid_product
-# ✓ TestProduct::test_detect_store_from_url
-# ✓ TestPriceTracker::test_price_drop_detected
-# ✓ TestJsonRepository::test_price_history_ordering
-# ... 22 passed in 0.84s</span></div>
-      </div>
-      <div style="text-align:center;padding:20px">
-        <button class="btn-lg btn-primary" onclick="goto('v-app')">Open Dashboard →</button>
-      </div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 12h6M12 9v6"/><circle cx="12" cy="12" r="10"/></svg> 1. Install</div><div class="codebox">git clone https://github.com/you/watchtower-pricing<br>cd watchtower-pricing<br>pip install -r requirements.txt</div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> 2. Add a product</div><div class="codebox">python automation/run.py add https://jumia.co.ke/sony --target 25000</div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px;font-size:16px"><svg class="icon-svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> 3. Run a check</div><div class="codebox">python automation/run.py track</div></div>
     </div>
   </div>
   <footer><span>© 2026 Watchtower Pricing · MIT License</span><span style="color:var(--t3)">v2.0.0</span></footer>
 </div>
-
-<script>
-// ── NAV ──
-function goto(id){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function scrollTo2(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}
-
-// ── NOTIFY ──
-function notify2(msg,icon='✓'){
-  const el=document.getElementById('notif');
-  document.getElementById('nicon').textContent=icon;
-  document.getElementById('nmsg').textContent=msg;
-  el.classList.add('show');
-  clearTimeout(el._t);
-  el._t=setTimeout(()=>el.classList.remove('show'),3000);
-}
-
-// ── APP TABS ──
-function appTab(name,btn){
-  document.querySelectorAll('.app-tab').forEach(t=>t.classList.remove('on'));
-  document.querySelectorAll('.app-pane').forEach(p=>p.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('pane-'+name).classList.add('on');
-}
-
-// ── PRODUCTS ──
-const API_BASE = 'http://localhost:8000';
-let products = [
-  {id:1,name:'Sony WH-1000XM5',store:'Amazon',price:28500,prev:31000,tgt:27000,hist:[31000,30500,30000,29000,28800,28500,28500],status:'drop'},
-  {id:2,name:'Samsung 65" QLED TV',store:'Jumia',price:112000,prev:105000,tgt:100000,hist:[105000,107000,109000,110000,111000,112000,112000],status:'rise'},
-  {id:3,name:'Apple AirPods Pro 2',store:'Kilimall',price:22000,prev:24500,tgt:20000,hist:[24500,24000,23500,23000,22500,22000,22000],status:'drop'},
-  {id:4,name:'Logitech MX Master 3',store:'AliExpress',price:6800,prev:6800,tgt:6500,hist:[7200,7100,7000,6900,6800,6800,6800],status:'flat'},
-  {id:5,name:'Hisense 43" Smart TV',store:'Kilimall',price:38000,prev:38000,tgt:35000,hist:[40000,39000,38500,38000,38000,38000,38000],status:'flat'},
-  {id:6,name:'JBL Charge 5',store:'Jumia',price:9200,prev:10000,tgt:8500,hist:[10000,9800,9500,9400,9200,9200,9200],status:'drop'},
-];
-
-function spark(h,color){
-  const mn=Math.min(...h),mx=Math.max(...h),rng=mx-mn||1;
-  const pts=h.map((v,i)=>`${i*(56/(h.length-1))},${22-((v-mn)/rng)*18+2}`).join(' ');
-  return `<svg class="spark" width="60" height="24" viewBox="0 0 60 24"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-}
-
-async function loadData() {
-  try {
-    const [prodsRes, healthRes, statsRes] = await Promise.all([
-      fetch(`${API_BASE}/products`),
-      fetch(`${API_BASE}/health`),
-      fetch(`${API_BASE}/stats`)
-    ]);
-    if (prodsRes.ok) {
-      const apiProducts = await prodsRes.json();
-      products = await Promise.all((apiProducts || []).map(async (p) => {
-        const histRes = await fetch(`${API_BASE}/products/${p.id}/history?limit=7`);
-        const history = histRes.ok ? await histRes.json() : [];
-        const prices = history.map((h) => h.price);
-        const prev = prices.length > 1 ? prices[prices.length - 2] : prices[0] || null;
-        const current = prices[prices.length - 1] || null;
-        return {
-          id: p.id,
-          name: p.name || p.url,
-          store: p.store.charAt(0).toUpperCase() + p.store.slice(1),
-          price: current,
-          prev: prev,
-          tgt: p.target_price || 0,
-          hist: prices,
-          status: 'flat'
-        };
-      }));
-      renderProducts();
-    }
-    if (healthRes.ok) {
-      const health = await healthRes.json();
-      document.getElementById('sc-tracked').textContent = health.products_tracked || 0;
-    }
-    if (statsRes.ok) {
-      const stats = await statsRes.json();
-      document.getElementById('sc-drops').textContent = (stats.recent_drops || []).length;
-    }
-    document.querySelector('.app-nav div[style*="API online"]').textContent = ' ● API online';
-  } catch (e) {
-    console.warn('Backend offline, using demo data', e);
-    document.querySelector('.app-nav div[style*="API online"]').textContent = ' ● Offline';
-    document.querySelector('.app-nav div[style*="API online"]').style.color = 'var(--r)';
-  }
-}
-
-function renderProducts(){
-  document.getElementById('prod-body').innerHTML=products.map(p=>{
-    const price = p.price || 0;
-    const prev = p.prev || price;
-    const diff = price - prev;
-    const pct = prev ? ((diff/prev)*100).toFixed(1) : 0;
-    const dir = diff<0 ? 'chg-down' : diff>0 ? 'chg-up' : 'chg-flat';
-    const str = diff<0 ? `▼ ${Math.abs(pct)}%` : diff>0 ? `▲ ${pct}%` : '— 0%';
-    const col = diff<0 ? 'var(--g)' : diff>0 ? 'var(--r)' : 'var(--t3)';
-    const below = price <= p.tgt && p.tgt > 0;
-    const badge = below ? `<span class="demo-badge badge-g">🎯 Buy!</span>` : diff>0 ? `<span class="demo-badge badge-r">Rising</span>` : `<span class="demo-badge badge-b">Watching</span>`;
-    const hist = Array.isArray(p.hist) ? p.hist : [];
-    return `<tr>
-      <td><div class="pname">${p.name}</div><div class="pstore">${p.store}</div></td>
-      <td class="pcurr">KES ${price.toLocaleString()}</td>
-      <td class="pchg ${dir}">${str}</td>
-      <td>${spark(hist,col)}</td>
-      <td style="font-family:var(--mono);font-size:12px;color:var(--t3)">KES ${p.tgt.toLocaleString()}</td>
-      <td>${badge}</td>
-      <td><button class="btn-sm" onclick="rmProduct(${p.id})">✕</button></td>
-    </tr>`;
-  }).join('');
-  document.getElementById('sc-tracked').textContent=products.length;
-  document.getElementById('sc-drops').textContent=products.filter(p=> (p.price||0) < (p.prev||p.price||0)).length;
-}
-
-function rmProduct(id){products=products.filter(p=>p.id!==id);renderProducts();notify2('Removed','✕')}
-
-async function addProduct(){
-  const url=document.getElementById('inp-url').value;
-  if(!url){notify2('Enter a URL first','!');return}
-  const tgt=parseFloat(document.getElementById('inp-tgt').value)||null;
-  const store=document.getElementById('inp-store').value;
-  document.getElementById('inp-url').value='';
-  document.getElementById('inp-tgt').value='';
-
-  try {
-    const resp = await fetch(`${API_BASE}/products`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        url,
-        store: store.toLowerCase(),
-        target_price: tgt,
-        name: `New ${store} product`
-      })
-    });
-    if(!resp.ok) throw new Error('API error');
-    notify2(`Added ${store} product ✓`,'📡');
-    setTimeout(loadData, 1000);
-  } catch(e) {
-    notify2('API offline — cannot add product','!');
-    console.error(e);
-  }
-}
-
-async function runAll() {
-  try {
-    await fetch(`${API_BASE}/track/all`, {method: 'POST'});
-    notify2('✅ Tracking cycle triggered','▶');
-    setTimeout(loadData, 3000); // Refresh after scrape
-  } catch(e) {
-    notify2('API offline','!');
-  }
-}
-
-// ── PLAN SELECTION & CHECKOUT ──
-let selectedPlan = null;
-
-function selectPlan(planId, price, name) {
-  selectedPlan = { id: planId, price, name };
-  document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
-  const planEl = document.querySelector(`.plan[data-plan="${planId}"]`);
-  if(planEl) planEl.classList.add('selected');
-  document.getElementById('modal-title').textContent = `Subscribe to ${name}`;
-  document.getElementById('plan-summary-name').textContent = name;
-  document.getElementById('plan-summary-price').textContent = `$${price}/mo`;
-  document.getElementById('total-amount').textContent = `$${price}.00`;
-
-  // Hide payment fields for free plan
-  const cardRow = document.getElementById('pay-card').closest('.form-row');
-  const expiryRow = document.getElementById('pay-expiry').closest('.form-row');
-  const secureNote = document.querySelector('.form-secure');
-  if(price === 0) {
-    cardRow.style.display = 'none';
-    expiryRow.style.display = 'none';
-    secureNote.style.display = 'none';
-    document.getElementById('pay-btn').textContent = 'Get started →';
-  } else {
-    cardRow.style.display = 'flex';
-    expiryRow.style.display = 'grid';
-    secureNote.style.display = 'block';
-    document.getElementById('pay-btn').textContent = 'Pay now →';
-  }
-  openModal();
-}
-
-function openModal() {
-  document.getElementById('checkout-modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal(e, force=false) {
-  if(force || e) {
-    document.getElementById('checkout-modal').classList.remove('show');
-    document.body.style.overflow = '';
-    selectedPlan = null;
-    document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
-    document.getElementById('payment-form').reset();
-    // Show all payment fields again
-    const cardRow = document.getElementById('pay-card').closest('.form-row');
-    const expiryRow = document.getElementById('pay-expiry').closest('.form-row');
-    const secureNote = document.querySelector('.form-secure');
-    cardRow.style.display = 'flex';
-    expiryRow.style.display = 'grid';
-    secureNote.style.display = 'block';
-    document.getElementById('pay-btn').textContent = 'Pay now →';
-  }
-}
-
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape') closeModal(null, true);
-});
-
-function formatCardInput(e) {
-  let v = e.target.value.replace(/\s+/g,'').replace(/[^0-9]/gi,'');
-  if(v.length > 4) v = v.match(/.{1,4}/g).join(' ');
-  e.target.value = v;
-}
-
-function formatExpiry(e) {
-  let v = e.target.value.replace(/[^0-9]/g,'');
-  if(v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2,4);
-  e.target.value = v;
-}
-
-function submitPayment(e) {
-  e.preventDefault();
-  const btn = document.getElementById('pay-btn');
-  btn.disabled = true;
-  btn.textContent = 'Processing...';
-  const email = document.getElementById('pay-email').value;
-  const planName = selectedPlan ? selectedPlan.name : 'Plan';
-  const planPrice = selectedPlan ? selectedPlan.price : 0;
-  setTimeout(() => {
-    closeModal(null, true);
-    notify2(`✅ Payment successful! ${planName} plan activated for ${email}`,'✅');
-    btn.disabled = false;
-    btn.textContent = planPrice === 0 ? 'Get started →' : 'Pay now →';
-    document.getElementById('payment-form').reset();
-    selectedPlan = null;
-    document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
-  }, 1500);
-}
-
-// ── MODAL CARD INPUTS ──
-document.addEventListener('DOMContentLoaded', () => {
-  const cardInput = document.getElementById('pay-card');
-  if(cardInput) cardInput.addEventListener('input', formatCardInput);
-  const expiryInput = document.getElementById('pay-expiry');
-  if(expiryInput) expiryInput.addEventListener('input', formatExpiry);
-});
-
-function scrollToSales(){scrollTo2('contact-sales');}
-
-// ── INIT ──
-loadData();
-setInterval(loadData, 30000); // Auto-refresh every 30s
-
-
-renderFeed();
-renderSideChart();
-renderRules();
-updateYaml('0 * * * *','Every hour');
-</script>
+<script src="script.js"></script>
 </body>
 </html>
