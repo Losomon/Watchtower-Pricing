@@ -1,0 +1,50 @@
+# .github/workflows/run.yml
+name: Watchtower Price Tracking
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # Every hour
+  workflow_dispatch:       # Manual trigger from GitHub UI
+
+jobs:
+  track-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore price history from cache
+        uses: actions/cache@v4
+        with:
+          path: data/
+          key: watchtower-data-${{ runner.os }}
+          restore-keys: |
+            watchtower-data-
+
+      - name: Run price tracker
+        env:
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python automation/run.py track
+
+      - name: Upload price history artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: price-history-${{ github.run_number }}
+          path: data/
+          retention-days: 90
