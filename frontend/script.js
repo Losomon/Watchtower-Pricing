@@ -25,7 +25,7 @@ function appTab(name,btn){
 }
 
 // ── PRODUCTS ──
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.origin === 'file://' ? 'http://localhost:8000' : window.location.origin.replace(/\/$/,'');
 let products = [
   {id:1,name:'Sony WH-1000XM5',store:'Amazon',price:28500,prev:31000,tgt:27000,hist:[31000,30500,30000,29000,28800,28500,28500],status:'drop'},
   {id:2,name:'Samsung 65" QLED TV',store:'Jumia',price:112000,prev:105000,tgt:100000,hist:[105000,107000,109000,110000,111000,112000,112000],status:'rise'},

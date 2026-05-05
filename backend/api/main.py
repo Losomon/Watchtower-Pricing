@@ -11,8 +11,10 @@ from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
+import os
 
 from core.models import (
     Product, PriceRecord, PriceChange, AlertConfig,
@@ -62,6 +64,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve frontend static files (for development/demo)
+repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+frontend_dir = os.path.join(repo_root, "..", "frontend")
+frontend_dir = os.path.normpath(frontend_dir)
+if os.path.exists(frontend_dir):
+    app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
+else:
+    logger.warning(f"Frontend directory not found: {frontend_dir}")
+
 
 # ── Request / Response Schemas ────────────────────────────────────────────────
 
@@ -96,6 +107,9 @@ class ProductWithHistory(BaseModel):
 
 @app.get("/", tags=["Meta"])
 def root():
+    """API root - serves frontend HTML when accessed via browser."""
+    if os.path.exists(frontend_dir):
+        return FileResponse(os.path.join(frontend_dir, "index.html"))
     return {"service": "Watchtower Pricing API", "version": "2.0.0", "status": "operational"}
 
 
@@ -104,8 +118,6 @@ def health():
     stats = repo.get_summary_stats()
     return {"status": "ok", **stats}
 
-
-# ── Products ──────────────────────────────────────────────────────────────────
 
 @app.get("/products", response_model=List[dict], tags=["Products"])
 def list_products(active_only: bool = Query(False)):
@@ -118,10 +130,8 @@ def list_products(active_only: bool = Query(False)):
 @app.post("/products", response_model=dict, status_code=201, tags=["Products"])
 def add_product(req: AddProductRequest, background: BackgroundTasks):
     product = Product(**req.model_dump())
-    # Auto-detect store from URL
     product.store = product.detect_store()
     repo.save_product(product)
-    # Kick off a first scrape in the background
     background.add_task(_scrape_product_bg, product)
     return product.model_dump()
 

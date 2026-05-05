@@ -8,7 +8,7 @@ import smtplib, logging, json
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 
 import httpx
 
@@ -72,7 +72,7 @@ def _build_email_html(change: PriceChange) -> str:
             </a>
         </div>
         <div style="padding:16px 24px;border-top:1px solid #1f2329;font-size:12px;color:#6b7280">
-            Sent by Watchtower Pricing · {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC
+            Sent by Watchtower Pricing · {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC
         </div>
     </div></body></html>"""
 

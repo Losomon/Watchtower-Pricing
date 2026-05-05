@@ -7,7 +7,7 @@ and orchestrates the full scrape → compare → alert pipeline.
 from __future__ import annotations
 import logging
 from typing import List, Optional, Tuple
-from datetime import datetime
+from datetime import datetime, timezone
 
 from core.models import (
     Product, PriceRecord, PriceChange, ScrapeResult,
@@ -173,7 +173,7 @@ def build_summary_report(changes: List[PriceChange]) -> str:
         return "No significant price changes detected."
     drops = [c for c in changes if c.direction == ChangeDirection.DROP]
     rises = [c for c in changes if c.direction == ChangeDirection.RISE]
-    lines = [f"📊 Watchtower Report — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC", ""]
+    lines = [f"📊 Watchtower Report — {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')} UTC", ""]
     if drops:
         lines.append(f"📉 Price Drops ({len(drops)})")
         for c in drops:

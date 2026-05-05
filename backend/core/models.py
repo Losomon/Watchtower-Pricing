@@ -5,7 +5,7 @@ Production-grade Pydantic v2 models for type-safe data throughout the system.
 
 from __future__ import annotations
 from pydantic import BaseModel, Field, field_validator, model_validator, HttpUrl
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List
 from enum import Enum
 import uuid
@@ -53,7 +53,7 @@ class Product(BaseModel):
     target_price: Optional[float] = None       # Alert threshold
     notify_channels: List[AlertChannel] = Field(default_factory=list)
     is_active: bool = True
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     tags: List[str] = Field(default_factory=list)
 
     @field_validator("url")
@@ -85,7 +85,7 @@ class PriceRecord(BaseModel):
     product_id: str
     price: float
     currency: Currency = Currency.KES
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     title: Optional[str] = None
     availability: Optional[str] = None
     scrape_success: bool = True
@@ -95,8 +95,8 @@ class PriceRecord(BaseModel):
     @field_validator("price")
     @classmethod
     def price_must_be_positive(cls, v: float) -> float:
-        if v <= 0:
-            raise ValueError("Price must be positive")
+        if v < 0:
+            raise ValueError("Price must be non-negative")
         return round(v, 2)
 
 
@@ -112,7 +112,7 @@ class PriceChange(BaseModel):
     change_amount: float
     change_percent: float
     direction: ChangeDirection
-    detected_at: datetime = Field(default_factory=datetime.utcnow)
+    detected_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     target_price: Optional[float] = None
 
     @model_validator(mode="after")

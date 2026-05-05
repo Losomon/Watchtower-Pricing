@@ -78,8 +78,13 @@ class TestPriceRecord:
         assert sample_record.price == 28500.0
 
     def test_zero_price_raises(self, sample_product):
+        # Zero price is now allowed for failed scrapes
+        r = PriceRecord(product_id=sample_product.id, price=0)
+        assert r.price == 0.0
+
+    def test_negative_price_raises(self, sample_product):
         with pytest.raises(Exception):
-            PriceRecord(product_id=sample_product.id, price=0)
+            PriceRecord(product_id=sample_product.id, price=-10)
 
     def test_price_rounded(self, sample_product):
         r = PriceRecord(product_id=sample_product.id, price=28500.999)
